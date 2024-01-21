@@ -1,5 +1,6 @@
 package com.example.androidappsample.ui.main
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -35,6 +36,15 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
+        if (!viewModel.dialogClosed) {
+            AlertDialog.Builder(requireContext())
+                .setMessage("first dialog")
+                .setOnCancelListener {
+                    viewModel.dialogClosed = true
+                }
+                .show()
+        }
     }
 
     override fun onCreateView(

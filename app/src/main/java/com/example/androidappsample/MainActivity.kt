@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.androidappsample.ui.main.MainFragment
 import com.example.androidappsample.ui.main.SubFragment
 
-class MainActivity : AppCompatActivity(), MainFragment.MainFragmentListener {
+class MainActivity : AppCompatActivity(), MainFragment.MainFragmentListener, SubFragment.SubFragmentListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,5 +21,9 @@ class MainActivity : AppCompatActivity(), MainFragment.MainFragmentListener {
             .replace(R.id.container, SubFragment.newInstance("test1", "test2"))
             .addToBackStack(null)
             .commit()
+    }
+
+    override fun onSubFragmentBack() {
+        supportFragmentManager.popBackStack()
     }
 }

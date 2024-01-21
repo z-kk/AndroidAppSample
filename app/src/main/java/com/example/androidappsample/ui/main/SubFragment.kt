@@ -1,9 +1,12 @@
 package com.example.androidappsample.ui.main
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.androidappsample.R
@@ -39,11 +42,25 @@ class SubFragment : Fragment() {
             }
     }
 
+    interface SubFragmentListener {
+        fun onSubFragmentBack()
+    }
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     private lateinit var viewModel: SubViewModel
+    private lateinit var listener: SubFragmentListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is SubFragmentListener) {
+            listener = context
+        } else {
+            throw RuntimeException("$context must implement SubFragmentListener")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +75,35 @@ class SubFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_sub, container, false)
+        val view = inflater.inflate(R.layout.fragment_sub, container, false)
+
+        view.findViewById<Button>(R.id.backButton)
+            .setOnClickListener { back() }
+        view.findViewById<Button>(R.id.dialogButton)
+            .setOnClickListener { showDialog() }
+
+        if (viewModel.showingDialog) {
+            showDialog()
+        }
+
+        return view
+    }
+
+    private fun back() {
+        listener.onSubFragmentBack()
+    }
+
+    private fun showDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(param1)
+            .setMessage(param2)
+            .setPositiveButton("OK") { _, _ ->
+                viewModel.showingDialog = false
+            }
+            .setOnCancelListener {
+                viewModel.showingDialog = false
+            }
+            .show()
+        viewModel.showingDialog = true
     }
 }
