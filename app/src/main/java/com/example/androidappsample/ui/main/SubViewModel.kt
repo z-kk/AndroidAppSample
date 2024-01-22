@@ -4,4 +4,6 @@ import androidx.lifecycle.ViewModel
 
 class SubViewModel : ViewModel() {
     var showingDialog = false
+    var dialogTitle = ""
+    var dialogMessage = ""
 }

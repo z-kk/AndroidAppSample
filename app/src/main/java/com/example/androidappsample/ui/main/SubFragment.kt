@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.androidappsample.R
+import com.example.androidappsample.SampleDialogFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,7 +23,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [SubFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SubFragment : Fragment() {
+class SubFragment : Fragment(), SampleDialogFragment.AlertDialogFragmentListener {
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -81,12 +83,32 @@ class SubFragment : Fragment() {
             .setOnClickListener { back() }
         view.findViewById<Button>(R.id.dialogButton)
             .setOnClickListener { showDialog() }
+        view.findViewById<Button>(R.id.otherDialogButton)
+            .setOnClickListener {
+                SampleDialogFragment.newInstance(viewModel.dialogTitle, viewModel.dialogMessage)
+                    .show(childFragmentManager, null)
+            }
 
         if (viewModel.showingDialog) {
             showDialog()
         }
 
         return view
+    }
+
+    override fun onDialogPositive(dialog: DialogFragment) {
+        viewModel.dialogTitle = ""
+        viewModel.dialogMessage = ""
+    }
+
+    override fun onDialogNegative(dialog: DialogFragment) {
+    }
+
+    override fun onDialogTextReceive(dialog: DialogFragment, text: String) {
+        if (text.isNotEmpty()) {
+            viewModel.dialogTitle = text + "_title"
+            viewModel.dialogMessage = text
+        }
     }
 
     private fun back() {
