@@ -5,4 +5,5 @@ import androidx.lifecycle.ViewModel
 class InitViewModel : ViewModel() {
     var launchingActivity = false
     var defaultSettingsOk = false
+    var bluetoothEnabled = false
 }
