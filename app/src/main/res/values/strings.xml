@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">AndroidAppSample</string>
     <string name="app_links_host">sample.com</string>
+    <string name="loading">loading</string>
 </resources>

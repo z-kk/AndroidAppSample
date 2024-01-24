@@ -36,15 +36,6 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-
-        if (!viewModel.dialogClosed) {
-            AlertDialog.Builder(requireContext())
-                .setMessage("first dialog")
-                .setOnCancelListener {
-                    viewModel.dialogClosed = true
-                }
-                .show()
-        }
     }
 
     override fun onCreateView(
