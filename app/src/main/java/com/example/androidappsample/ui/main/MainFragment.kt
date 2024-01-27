@@ -19,6 +19,7 @@ class MainFragment : Fragment() {
 
     interface MainFragmentListener {
         fun onMainFragmentNext()
+        fun onMainFragmentHttp()
     }
 
     private lateinit var viewModel: MainViewModel
@@ -46,11 +47,17 @@ class MainFragment : Fragment() {
 
         view.findViewById<Button>(R.id.nextButton)
             .setOnClickListener { nextFragment() }
+        view.findViewById<Button>(R.id.httpButton)
+            .setOnClickListener { httpActivity() }
 
         return view
     }
 
     private fun nextFragment() {
         listener.onMainFragmentNext()
+    }
+
+    private fun httpActivity() {
+        listener.onMainFragmentHttp()
     }
 }

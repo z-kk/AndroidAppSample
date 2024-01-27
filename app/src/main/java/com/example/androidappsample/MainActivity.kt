@@ -1,5 +1,6 @@
 package com.example.androidappsample
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidappsample.ui.main.InitFragment
@@ -25,6 +26,10 @@ class MainActivity : AppCompatActivity(),
             .replace(R.id.container, SubFragment.newInstance("test1", "test2"))
             .addToBackStack(null)
             .commit()
+    }
+
+    override fun onMainFragmentHttp() {
+        startActivity(Intent(this, HttpActivity::class.java))
     }
 
     override fun onInitFragmentFinish() {
